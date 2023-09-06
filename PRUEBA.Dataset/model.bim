@@ -12,7 +12,7 @@
       },
       {
         "name": "PBIDesktopVersion",
-        "value": "2.120.963.0 (23.08)"
+        "value": "2.118.828.0 (23.06)"
       },
       {
         "name": "PBI_ProTooling",
@@ -41,61 +41,6 @@
     "sourceQueryCulture": "es-ES",
     "tables": [
       {
-        "name": "PRUEBA",
-        "annotations": [
-          {
-            "name": "PBI_ResultType",
-            "value": "Table"
-          }
-        ],
-        "columns": [
-          {
-            "name": "CENTROS",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "5ecbf482-1948-40ef-b247-f951cee51436",
-            "sourceColumn": "CENTROS",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "CANTIDAD",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "int64",
-            "formatString": "0",
-            "lineageTag": "4c77b546-4f4e-4a8c-b3f8-2212f4a71895",
-            "sourceColumn": "CANTIDAD",
-            "summarizeBy": "sum"
-          }
-        ],
-        "lineageTag": "dfa18acb-fe5d-41c1-8809-ce6124e2879d",
-        "partitions": [
-          {
-            "name": "PRUEBA",
-            "mode": "import",
-            "source": {
-              "expression": [
-                "let",
-                "  Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WcvQLcXR29PFx9HN2VNJRMjJVitWJVgpwDHV2DALxLcB8f2cPfwUXT2dPV1+nIFeoulgA\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [CENTROS = _t, CANTIDAD = _t]),",
-                "  #\"Tipo de columna cambiado\" = Table.TransformColumnTypes(Origen, {{\"CENTROS\", type text}, {\"CANTIDAD\", Int64.Type}})",
-                "in",
-                "  #\"Tipo de columna cambiado\""
-              ],
-              "type": "m"
-            }
-          }
-        ]
-      },
-      {
         "name": "DateTableTemplate_8b872608-3320-4c5d-bc22-2acc1b84fb6e",
         "annotations": [
           {
@@ -108,23 +53,6 @@
           }
         ],
         "columns": [
-          {
-            "name": "Date",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "User"
-              }
-            ],
-            "dataCategory": "PaddedDateTableDates",
-            "dataType": "dateTime",
-            "isHidden": true,
-            "isNameInferred": true,
-            "lineageTag": "d1167b00-3646-4942-ad38-40623ffa447e",
-            "sourceColumn": "[Date]",
-            "summarizeBy": "none",
-            "type": "calculatedTableColumn"
-          },
           {
             "name": "Año",
             "annotations": [
@@ -146,7 +74,24 @@
             "type": "calculated"
           },
           {
-            "name": "NroMes",
+            "name": "Date",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataCategory": "PaddedDateTableDates",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "isNameInferred": true,
+            "lineageTag": "d1167b00-3646-4942-ad38-40623ffa447e",
+            "sourceColumn": "[Date]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          },
+          {
+            "name": "Día",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -154,14 +99,14 @@
               },
               {
                 "name": "TemplateId",
-                "value": "MonthNumber"
+                "value": "Day"
               }
             ],
-            "dataCategory": "MonthOfYear",
+            "dataCategory": "DayOfMonth",
             "dataType": "int64",
-            "expression": "MONTH([Date])",
+            "expression": "DAY([Date])",
             "isHidden": true,
-            "lineageTag": "aedbf35b-6ba5-4721-98c0-a3fc94785329",
+            "lineageTag": "f4c21385-6858-4885-ad16-6d7eb2bd6700",
             "summarizeBy": "none",
             "type": "calculated"
           },
@@ -183,6 +128,26 @@
             "isHidden": true,
             "lineageTag": "57a4ac29-3464-4e53-8f7b-c993c9b801b2",
             "sortByColumn": "NroMes",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "NroMes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ],
+            "dataCategory": "MonthOfYear",
+            "dataType": "int64",
+            "expression": "MONTH([Date])",
+            "isHidden": true,
+            "lineageTag": "aedbf35b-6ba5-4721-98c0-a3fc94785329",
             "summarizeBy": "none",
             "type": "calculated"
           },
@@ -224,26 +189,6 @@
             "isHidden": true,
             "lineageTag": "af726e32-d13f-4076-b515-aed8f591949c",
             "sortByColumn": "NroTrimestre",
-            "summarizeBy": "none",
-            "type": "calculated"
-          },
-          {
-            "name": "Día",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "User"
-              },
-              {
-                "name": "TemplateId",
-                "value": "Day"
-              }
-            ],
-            "dataCategory": "DayOfMonth",
-            "dataType": "int64",
-            "expression": "DAY([Date])",
-            "isHidden": true,
-            "lineageTag": "f4c21385-6858-4885-ad16-6d7eb2bd6700",
             "summarizeBy": "none",
             "type": "calculated"
           }
@@ -296,6 +241,61 @@
             "source": {
               "expression": "Calendar(Date(2015,1,1), Date(2015,1,1))",
               "type": "calculated"
+            }
+          }
+        ]
+      },
+      {
+        "name": "PRUEBA",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "CANTIDAD",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "4c77b546-4f4e-4a8c-b3f8-2212f4a71895",
+            "sourceColumn": "CANTIDAD",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "CENTROS",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "5ecbf482-1948-40ef-b247-f951cee51436",
+            "sourceColumn": "CENTROS",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "dfa18acb-fe5d-41c1-8809-ce6124e2879d",
+        "partitions": [
+          {
+            "name": "PRUEBA",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "  Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WcvQLcXR29PFx9HN2VNJRMjJVitWJVgpwDHV2DALxLcB8f2cPfwUXT2dPV1+nIFeoulgA\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [CENTROS = _t, CANTIDAD = _t]),",
+                "  #\"Tipo de columna cambiado\" = Table.TransformColumnTypes(Origen, {{\"CENTROS\", type text}, {\"CANTIDAD\", Int64.Type}})",
+                "in",
+                "  #\"Tipo de columna cambiado\""
+              ],
+              "type": "m"
             }
           }
         ]
